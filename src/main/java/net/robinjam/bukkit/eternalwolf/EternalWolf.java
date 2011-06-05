@@ -1,5 +1,8 @@
 package net.robinjam.bukkit.eternalwolf;
 
+import org.bukkit.event.Event;
+import org.bukkit.plugin.PluginDescriptionFile;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -8,12 +11,20 @@ import org.bukkit.plugin.java.JavaPlugin;
  */
 public class EternalWolf extends JavaPlugin {
 
-    public void onDisable() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+    EntityListener entityListener = new EntityListener();
 
     public void onEnable() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        // Register events
+        PluginManager pm = getServer().getPluginManager();
+        pm.registerEvent(Event.Type.ENTITY_DAMAGE, entityListener, Event.Priority.Normal, this);
+
+        // Read plugin description file
+        PluginDescriptionFile pdf = this.getDescription();
+        
+        System.out.println(pdf.getName() + " version " + pdf.getVersion() + " is enabled!");
     }
 
+    public void onDisable() {
+        // Do nothing
+    }
 }
