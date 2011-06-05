@@ -1,5 +1,5 @@
 name: EternalWolf
 main: net.robinjam.bukkit.eternalwolf.EternalWolf
-version: 0.1
+version: ${project.version}
 commands:
   # No commands
