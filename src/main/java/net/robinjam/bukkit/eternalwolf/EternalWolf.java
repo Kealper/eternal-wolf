@@ -15,7 +15,7 @@ public class EternalWolf extends JavaPlugin {
 
     EntityListener entityListener = new EntityListener();
     PlayerListener playerListener = new PlayerListener(this);
-    int maxWolves = -1;
+    int maxWolves = 5;
     PluginDescriptionFile pdf;
 
     public void onEnable() {
