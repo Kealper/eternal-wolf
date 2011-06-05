@@ -13,6 +13,12 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
  */
 class PlayerListener extends org.bukkit.event.player.PlayerListener {
 
+    EternalWolf plugin;
+
+    public PlayerListener(EternalWolf instance) {
+        plugin = instance;
+    }
+
     @Override
     public void onPlayerInteractEntity(PlayerInteractEntityEvent event) {
         event.setCancelled(false);
@@ -27,12 +33,14 @@ class PlayerListener extends org.bukkit.event.player.PlayerListener {
             // do not allow them to tame another one
             if (!((Wolf)target).isTamed() && playerHasTooManyWolves(player)) {
                 event.setCancelled(true);
-                player.sendMessage(ChatColor.RED + "You cannot tame any more wolves!");
+                player.sendMessage(ChatColor.RED + "You cannot tame more than " + plugin.maxWolves + " wolves!");
             }
         }
     }
 
     protected boolean playerHasTooManyWolves(Player player) {
+        if (plugin.maxWolves == -1) return false;
+
         int numWolves = 0;
         for (Entity entity : player.getWorld().getEntities()) {
             if (entity instanceof Wolf) {
@@ -44,6 +52,6 @@ class PlayerListener extends org.bukkit.event.player.PlayerListener {
             }
         }
 
-        return (numWolves >= 5);
+        return (numWolves >= plugin.maxWolves);
     }
 }
