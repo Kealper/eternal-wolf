@@ -36,10 +36,12 @@ class PlayerListener extends org.bukkit.event.player.PlayerListener {
             if (!wolf.isTamed() && playerHasTooManyWolves(player)) {
                 event.setCancelled(true);
                 player.sendMessage(ChatColor.RED + "You cannot tame more than " + plugin.maxWolves + " wolves!");
-            } else if (wolf.isTamed() && !wolf.getOwner().equals(player) && wolf.getOwner() instanceof Player) {
-                // If the wolf is owned by another player, get that player's name
-                Player owner = (Player) wolf.getOwner();
-                player.sendMessage(ChatColor.RED + "That wolf belongs to " + owner.getDisplayName());
+            } else if (wolf.isTamed() && wolf.getOwner() instanceof Player) {
+                Player owner = (Player)wolf.getOwner();
+                if (!owner.equals(player)) {
+                    // If the wolf is owned by another player, get that player's name
+                    player.sendMessage(ChatColor.RED + "That wolf belongs to " + owner.getDisplayName());
+                }
             }
         }
     }
@@ -54,8 +56,12 @@ class PlayerListener extends org.bukkit.event.player.PlayerListener {
             if (entity instanceof Wolf) {
                 Wolf wolf = (Wolf) entity;
 
-                if (wolf.isTamed() && wolf.getOwner().equals(player)) {
-                    numWolves++;
+                if (wolf.isTamed() && wolf.getOwner() instanceof Player) {
+                    Player owner = (Player)wolf.getOwner();
+                    
+                    if (owner.equals(player)) {
+                        numWolves++;
+                    }
                 }
             }
         }

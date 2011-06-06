@@ -20,10 +20,10 @@ public class EntityListener extends org.bukkit.event.entity.EntityListener {
             Wolf wolf = (Wolf) event.getEntity();
 
             // ...and the wolf has an owner
-            if (wolf.isTamed() && wolf.getOwner() instanceof Player) {
+            if (wolf.isTamed()) {
 
                 // If the wolf was damaged by another entity
-                if (event instanceof EntityDamageByEntityEvent) {
+                if (event instanceof EntityDamageByEntityEvent && wolf.getOwner() instanceof Player) {
                     EntityDamageByEntityEvent damageEvent = (EntityDamageByEntityEvent) event;
 
                     Player owner = (Player) wolf.getOwner();
@@ -39,7 +39,7 @@ public class EntityListener extends org.bukkit.event.entity.EntityListener {
                     // If the wolf was damaged by an op using a bone
                     else if(damageEvent.getDamager() instanceof Player) {
                         Player attacker = (Player) damageEvent.getDamager();
-                        if (attacker.isOp() && attacker.getItemInHand().getType() == Material.BONE) {
+                        if (attacker.isOp() && attacker.getItemInHand().getType() == Material.BONE && !owner.isOp()) {
                             wolf.setOwner(null);
                             wolf.setSitting(false);
                             attacker.sendMessage(ChatColor.RED + "You have released " + owner.getDisplayName() + "'s wolf!");
@@ -48,7 +48,7 @@ public class EntityListener extends org.bukkit.event.entity.EntityListener {
                         }
                     }
                 }
-
+                
                 event.setCancelled(true);
             }
         }
@@ -64,10 +64,13 @@ public class EntityListener extends org.bukkit.event.entity.EntityListener {
             // ...and the attacker is their own wolf
             if (damageEvent.getDamager() instanceof Wolf) {
                 Wolf wolf = (Wolf) damageEvent.getDamager();
-
-                if (wolf.isTamed() && wolf.getOwner().equals(player)) {
-                    wolf.setTarget(null);
-                    event.setCancelled(true);
+                
+                if (wolf.isTamed() && wolf.getOwner() instanceof Player) {
+                    Player owner = (Player) wolf.getOwner();
+                    if (owner.equals(player)) {
+                        wolf.setTarget(null);
+                        event.setCancelled(true);
+                    }
                 }
             }
 
