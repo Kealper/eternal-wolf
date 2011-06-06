@@ -40,5 +40,26 @@ public class EntityListener extends org.bukkit.event.entity.EntityListener {
                 event.setCancelled(true);
             }
         }
+
+        // If the entity that was damaged is a player
+        if (event.getEntity() instanceof Player && event instanceof EntityDamageByEntityEvent) {
+            Player player = (Player) event.getEntity();
+            EntityDamageByEntityEvent damageEvent = (EntityDamageByEntityEvent) event;
+
+            // ...and the attacker is their own wolf
+            if (damageEvent.getDamager() instanceof Wolf) {
+                Wolf wolf = (Wolf) damageEvent.getDamager();
+
+                if (wolf.getOwner() == player) {
+                    wolf.setTarget(null);
+                    event.setCancelled(true);
+                }
+            }
+
+            // ...or they're attacking themself (how is that even possible?)
+            if (damageEvent.getDamager() == damageEvent.getEntity())
+                event.setCancelled(true);
+        }
     }
+    
 }

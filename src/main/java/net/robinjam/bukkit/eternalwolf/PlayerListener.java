@@ -36,7 +36,7 @@ class PlayerListener extends org.bukkit.event.player.PlayerListener {
             if (!wolf.isTamed() && playerHasTooManyWolves(player)) {
                 event.setCancelled(true);
                 player.sendMessage(ChatColor.RED + "You cannot tame more than " + plugin.maxWolves + " wolves!");
-            } else if (wolf.isTamed() && wolf.getOwner() != player && wolf.getOwner() instanceof Player) {
+            } else if (wolf.isTamed() && wolf.getOwner().hashCode() != player.hashCode() && wolf.getOwner() instanceof Player) {
                 // If the wolf is owned by another player, get that player's name
                 Player owner = (Player) wolf.getOwner();
                 player.sendMessage(ChatColor.RED + "That wolf belongs to " + owner.getDisplayName());
