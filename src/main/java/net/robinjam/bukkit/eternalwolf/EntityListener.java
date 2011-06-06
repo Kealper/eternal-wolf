@@ -29,7 +29,7 @@ public class EntityListener extends org.bukkit.event.entity.EntityListener {
                     Player owner = (Player) wolf.getOwner();
 
                     // If the wolf was damaged by its owner using a bone
-                    if (damageEvent.getDamager() == owner && owner.getItemInHand().getType() == Material.BONE) {
+                    if (damageEvent.getDamager().hashCode() == owner.hashCode() && owner.getItemInHand().getType() == Material.BONE) {
                         // Release the wolf
                         wolf.setOwner(null);
                         wolf.setSitting(false);
