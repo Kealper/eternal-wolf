@@ -50,7 +50,7 @@ public class EntityListener extends org.bukkit.event.entity.EntityListener {
             if (damageEvent.getDamager() instanceof Wolf) {
                 Wolf wolf = (Wolf) damageEvent.getDamager();
 
-                if (wolf.getOwner() == player) {
+                if (wolf.isTamed() && wolf.getOwner() == player) {
                     wolf.setTarget(null);
                     event.setCancelled(true);
                 }
