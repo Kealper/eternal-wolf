@@ -28,8 +28,11 @@ public class EntityListener extends org.bukkit.event.entity.EntityListener {
 
                     Player owner = (Player) wolf.getOwner();
 
+                    System.out.println(damageEvent.getDamager());
+                    System.out.println(wolf.getOwner());
+
                     // If the wolf was damaged by its owner using a bone
-                    if (damageEvent.getDamager().hashCode() == owner.hashCode() && owner.getItemInHand().getType() == Material.BONE) {
+                    if (damageEvent.getDamager().equals(owner) && owner.getItemInHand().getType() == Material.BONE) {
                         // Release the wolf
                         wolf.setOwner(null);
                         wolf.setSitting(false);
@@ -41,6 +44,9 @@ public class EntityListener extends org.bukkit.event.entity.EntityListener {
             }
         }
 
+        // The following is a bugfix to prevent tamed wolves becoming agressive
+        // if their owner hits them with an arrow at point-blank
+        
         // If the entity that was damaged is a player
         if (event.getEntity() instanceof Player && event instanceof EntityDamageByEntityEvent) {
             Player player = (Player) event.getEntity();
@@ -50,14 +56,14 @@ public class EntityListener extends org.bukkit.event.entity.EntityListener {
             if (damageEvent.getDamager() instanceof Wolf) {
                 Wolf wolf = (Wolf) damageEvent.getDamager();
 
-                if (wolf.isTamed() && wolf.getOwner() == player) {
+                if (wolf.isTamed() && wolf.getOwner().equals(player)) {
                     wolf.setTarget(null);
                     event.setCancelled(true);
                 }
             }
 
             // ...or they're attacking themself (how is that even possible?)
-            if (damageEvent.getDamager() == damageEvent.getEntity())
+            if (damageEvent.getDamager().equals(damageEvent.getEntity()))
                 event.setCancelled(true);
         }
     }
