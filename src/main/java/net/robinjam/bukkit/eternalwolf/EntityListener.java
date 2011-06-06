@@ -28,15 +28,24 @@ public class EntityListener extends org.bukkit.event.entity.EntityListener {
 
                     Player owner = (Player) wolf.getOwner();
 
-                    System.out.println(damageEvent.getDamager());
-                    System.out.println(wolf.getOwner());
-
                     // If the wolf was damaged by its owner using a bone
                     if (damageEvent.getDamager().equals(owner) && owner.getItemInHand().getType() == Material.BONE) {
                         // Release the wolf
                         wolf.setOwner(null);
                         wolf.setSitting(false);
                         owner.sendMessage(ChatColor.RED + "You have released your wolf!");
+                    }
+
+                    // If the wolf was damaged by an op using a bone
+                    else if(damageEvent.getDamager() instanceof Player) {
+                        Player attacker = (Player) damageEvent.getDamager();
+                        if (attacker.isOp() && attacker.getItemInHand().getType() == Material.BONE) {
+                            wolf.setOwner(null);
+                            wolf.setSitting(false);
+                            attacker.sendMessage(ChatColor.RED + "You have released " + owner.getDisplayName() + "'s wolf!");
+                            if (owner.isOnline())
+                                owner.sendMessage(ChatColor.RED + attacker.getDisplayName() + " has released your wolf!");
+                        }
                     }
                 }
 
