@@ -1,6 +1,7 @@
 package net.robinjam.bukkit.eternalwolf;
 
 import java.io.File;
+import net.robinjam.bukkit.eternalwolf.commands.CallWolves;
 import org.bukkit.event.Event;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
@@ -23,6 +24,9 @@ public class EternalWolf extends JavaPlugin {
         PluginManager pm = getServer().getPluginManager();
         pm.registerEvent(Event.Type.ENTITY_DAMAGE, entityListener, Event.Priority.Normal, this);
         pm.registerEvent(Event.Type.PLAYER_INTERACT_ENTITY, playerListener, Event.Priority.Normal, this);
+
+        // Register commands
+        this.getCommand("call-wolves").setExecutor(new CallWolves());
 
         // Read plugin description file
         pdf = this.getDescription();

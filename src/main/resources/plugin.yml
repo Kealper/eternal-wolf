@@ -2,4 +2,6 @@ name: EternalWolf
 main: net.robinjam.bukkit.eternalwolf.EternalWolf
 version: ${project.version}
 commands:
-  # No commands
+  call-wolves:
+    description: Call all your wolves to your current location
+    usage: /<command>
