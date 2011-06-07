@@ -1,6 +1,8 @@
 package net.robinjam.bukkit.eternalwolf;
 
 import java.io.File;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import net.robinjam.bukkit.eternalwolf.commands.CallWolves;
 import org.bukkit.event.Event;
 import org.bukkit.plugin.PluginDescriptionFile;
@@ -16,8 +18,10 @@ public class EternalWolf extends JavaPlugin {
 
     EntityListener entityListener = new EntityListener();
     PlayerListener playerListener = new PlayerListener(this);
-    int maxWolves = 5;
     PluginDescriptionFile pdf;
+    static final Logger log = Logger.getLogger("Minecraft");
+
+    int maxWolves = 5;
 
     public void onEnable() {
         // Register events
@@ -33,8 +37,8 @@ public class EternalWolf extends JavaPlugin {
 
         // Load config.yml
         loadConfiguration();
-        
-        System.out.println(pdf.getName() + " version " + pdf.getVersion() + " is enabled!");
+
+        log.log(Level.INFO, String.format("%s version %s is enabled!", pdf.getName(), pdf.getVersion()));
     }
 
     public void onDisable() {
@@ -48,7 +52,7 @@ public class EternalWolf extends JavaPlugin {
         if (!configFile.exists()) {
             config.setProperty("max_wolves", maxWolves);
             config.save();
-            System.out.println("[" + pdf.getName() + "] Created default configuration file");
+            log.log(Level.INFO, String.format("[%s] Created default configuration file", pdf.getName()));
         } else {
             config.load();
         }
