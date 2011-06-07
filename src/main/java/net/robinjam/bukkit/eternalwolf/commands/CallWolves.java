@@ -9,7 +9,7 @@ import org.bukkit.entity.Wolf;
 
 /**
  *
- * @author james
+ * @author robinjam
  */
 public class CallWolves implements CommandExecutor {
 
