@@ -19,7 +19,7 @@ public class PlayerUtil {
             if (entity instanceof Wolf) {
                 Wolf wolf = (Wolf) entity;
 
-                if (wolf.isTamed() && wolf.getOwner().equals(player))
+                if (wolf.isTamed() && player.equals(wolf.getOwner()))
                     wolves.add(wolf);
             }
         }
