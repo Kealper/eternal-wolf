@@ -13,6 +13,12 @@ import org.bukkit.event.entity.EntityDamageEvent;
  */
 public class EntityListener extends org.bukkit.event.entity.EntityListener {
 
+    private EternalWolf plugin;
+
+    public EntityListener(EternalWolf instance) {
+        plugin = instance;
+    }
+
     @Override
     public void onEntityDamage(EntityDamageEvent event) {
         // If the entity that was damaged is a wolf
@@ -30,25 +36,23 @@ public class EntityListener extends org.bukkit.event.entity.EntityListener {
 
                     // If the wolf was damaged by its owner using a bone
                     if (damageEvent.getDamager().equals(owner) && owner.getItemInHand().getType() == Material.BONE) {
-                        // Release the wolf
-                        wolf.setOwner(null);
-                        wolf.setSitting(false);
-                        owner.sendMessage(ChatColor.RED + "You have released your wolf!");
+                        // Check if the player has permission to release their own wolves
+                        if (plugin.playerHasPermission(owner, "eternalwolf.release_own_wolves", true)) {
+                            // Release the wolf
+                            wolf.setOwner(null);
+                            wolf.setSitting(false);
+                            owner.sendMessage(ChatColor.RED + "You have released your wolf!");
+                        }
                     }
 
-                    // If the wolf was damaged by an op using a bone
+                    // If the player has permission to release other peoples' wolves
                     else if(damageEvent.getDamager() instanceof Player) {
                         Player attacker = (Player) damageEvent.getDamager();
-                        if (attacker.isOp() && attacker.getItemInHand().getType() == Material.BONE) {
-                            if (!owner.isOp()) {
-                                wolf.setOwner(null);
-                                wolf.setSitting(false);
-                                attacker.sendMessage(ChatColor.RED + "You have released " + owner.getDisplayName() + "'s wolf!");
-                                if (owner.isOnline())
-                                    owner.sendMessage(ChatColor.RED + attacker.getDisplayName() + " has released your wolf!");
-                            } else {
-                                attacker.sendMessage(ChatColor.RED + "You may not release another op's wolves!");
-                            }
+                        if (plugin.playerHasPermission(attacker, "eternalwolf.release_other_wolves", attacker.isOp()) && attacker.getItemInHand().getType() == Material.BONE) {
+                            wolf.setOwner(null);
+                            wolf.setSitting(false);
+                            attacker.sendMessage(ChatColor.RED + "You have released " + owner.getDisplayName() + "'s wolf!");
+                            owner.sendMessage(ChatColor.RED + attacker.getDisplayName() + " has released your wolf!");
                         }
                     }
                 }
