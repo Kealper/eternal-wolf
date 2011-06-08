@@ -1,5 +1,6 @@
 package net.robinjam.bukkit.eternalwolf;
 
+import net.robinjam.bukkit.util.PlayerUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
@@ -21,7 +22,6 @@ class PlayerListener extends org.bukkit.event.player.PlayerListener {
 
     @Override
     public void onPlayerInteractEntity(PlayerInteractEntityEvent event) {
-        event.setCancelled(false);
         Player player = event.getPlayer();
         Entity target = event.getRightClicked();
 
@@ -50,22 +50,6 @@ class PlayerListener extends org.bukkit.event.player.PlayerListener {
         // If max_wolves is -1, allow each player unlimited wolves
         if (plugin.maxWolves == -1) return false;
 
-        // Count the player's wolves
-        int numWolves = 0;
-        for (Entity entity : player.getWorld().getEntities()) {
-            if (entity instanceof Wolf) {
-                Wolf wolf = (Wolf) entity;
-
-                if (wolf.isTamed() && wolf.getOwner() instanceof Player) {
-                    Player owner = (Player)wolf.getOwner();
-                    
-                    if (owner.equals(player)) {
-                        numWolves++;
-                    }
-                }
-            }
-        }
-
-        return (numWolves >= plugin.maxWolves);
+        return (PlayerUtil.getWolves(player).size() >= plugin.maxWolves);
     }
 }
