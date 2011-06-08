@@ -58,27 +58,11 @@ public class EntityListener extends org.bukkit.event.entity.EntityListener {
         }
 
         // The following is a bugfix to prevent tamed wolves becoming agressive
-        // if their owner hits them with an arrow at point-blank
-        
-        // If the entity that was damaged is a player
+        // if their owner attacks himself with an arrow
+
         if (event.getEntity() instanceof Player && event instanceof EntityDamageByEntityEvent) {
-            Player player = (Player) event.getEntity();
             EntityDamageByEntityEvent damageEvent = (EntityDamageByEntityEvent) event;
 
-            // ...and the attacker is their own wolf
-            if (damageEvent.getDamager() instanceof Wolf) {
-                Wolf wolf = (Wolf) damageEvent.getDamager();
-                
-                if (wolf.isTamed() && wolf.getOwner() instanceof Player) {
-                    Player owner = (Player) wolf.getOwner();
-                    if (owner.equals(player)) {
-                        wolf.setTarget(null);
-                        event.setCancelled(true);
-                    }
-                }
-            }
-
-            // ...or they're attacking themself (how is that even possible?)
             if (damageEvent.getDamager().equals(damageEvent.getEntity()))
                 event.setCancelled(true);
         }
