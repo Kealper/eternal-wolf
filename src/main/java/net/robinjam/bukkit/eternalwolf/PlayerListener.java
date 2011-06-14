@@ -1,9 +1,9 @@
 package net.robinjam.bukkit.eternalwolf;
 
 import net.robinjam.bukkit.util.PlayerUtil;
+import net.robinjam.bukkit.util.WolfUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.entity.CraftWolf;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Wolf;
@@ -28,9 +28,9 @@ class PlayerListener extends org.bukkit.event.player.PlayerListener {
 
         // If the player is giving a bone to a wolf
         if (player.getItemInHand().getType() == Material.BONE && 
-                event.getRightClicked() instanceof CraftWolf) {
+                event.getRightClicked() instanceof Wolf) {
 
-            CraftWolf wolf = (CraftWolf) target;
+            Wolf wolf = (Wolf) target;
 
             // If the wolf is wild and the player already owns too many wolves,
             // do not allow them to tame another one
@@ -40,7 +40,7 @@ class PlayerListener extends org.bukkit.event.player.PlayerListener {
             } else if (wolf.isTamed()) {
                 if (!player.equals(wolf.getOwner()) && plugin.playerHasPermission(player, "eternalwolf.check_owner", true)) {
                     // If the wolf is owned by another player, get that player's name
-                    player.sendMessage(ChatColor.RED + "That wolf belongs to " + wolf.getHandle().x());
+                    player.sendMessage(ChatColor.RED + "That wolf belongs to " + WolfUtil.getWolfOwnerName(wolf));
                 }
             }
         }
