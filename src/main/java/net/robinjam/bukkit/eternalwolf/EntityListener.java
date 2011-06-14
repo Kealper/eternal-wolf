@@ -1,5 +1,6 @@
 package net.robinjam.bukkit.eternalwolf;
 
+import net.robinjam.bukkit.util.WolfUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -29,15 +30,15 @@ public class EntityListener extends org.bukkit.event.entity.EntityListener {
             if (wolf.isTamed()) {
 
                 // If the wolf was damaged by another entity
-                if (event instanceof EntityDamageByEntityEvent && wolf.getOwner() instanceof Player) {
+                if (event instanceof EntityDamageByEntityEvent) {
                     EntityDamageByEntityEvent damageEvent = (EntityDamageByEntityEvent) event;
 
-                    Player owner = (Player) wolf.getOwner();
-
                     // If the wolf was damaged by its owner using a bone
-                    if (damageEvent.getDamager().equals(owner) && owner.getItemInHand().getType() == Material.BONE) {
+                    if (wolf.getOwner() instanceof Player && damageEvent.getDamager().equals(wolf.getOwner())) {
+                        Player owner = (Player) wolf.getOwner();
+
                         // Check if the player has permission to release their own wolves
-                        if (plugin.playerHasPermission(owner, "eternalwolf.release_own_wolves", true)) {
+                        if (owner.getItemInHand().getType() == Material.BONE && plugin.playerHasPermission(owner, "eternalwolf.release_own_wolves", true)) {
                             // Release the wolf
                             wolf.setOwner(null);
                             wolf.setSitting(false);
@@ -51,12 +52,12 @@ public class EntityListener extends org.bukkit.event.entity.EntityListener {
                     else if(damageEvent.getDamager() instanceof Player) {
                         Player attacker = (Player) damageEvent.getDamager();
                         if (plugin.playerHasPermission(attacker, "eternalwolf.release_other_wolves", attacker.isOp()) && attacker.getItemInHand().getType() == Material.BONE) {
+                            attacker.sendMessage(ChatColor.RED + "You have released " + WolfUtil.getWolfOwnerName(wolf) + "'s wolf!");
+                            if (wolf.getOwner() instanceof Player && ((Player)wolf.getOwner()).isOnline())
+                                ((Player)wolf.getOwner()).sendMessage(ChatColor.RED + attacker.getDisplayName() + " has released your wolf!");
+                            
                             wolf.setOwner(null);
                             wolf.setSitting(false);
-                            attacker.sendMessage(ChatColor.RED + "You have released " + owner.getDisplayName() + "'s wolf!");
-                            if (owner.isOnline())
-                                owner.sendMessage(ChatColor.RED + attacker.getDisplayName() + " has released your wolf!");
-
                             event.setCancelled(true);
                         }
                     }
