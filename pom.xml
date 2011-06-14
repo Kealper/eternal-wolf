@@ -57,5 +57,11 @@
             <artifactId>Permissions</artifactId>
             <version>3.1.4</version>
         </dependency>
+        
+        <dependency>
+            <groupId>org.bukkit</groupId>
+            <artifactId>craftbukkit</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 </project>
