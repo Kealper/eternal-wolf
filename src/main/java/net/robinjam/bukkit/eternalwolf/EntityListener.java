@@ -43,6 +43,8 @@ public class EntityListener extends org.bukkit.event.entity.EntityListener {
                             wolf.setSitting(false);
                             owner.sendMessage(ChatColor.RED + "You have released your wolf!");
                         }
+
+                        event.setCancelled(true);
                     }
 
                     // If the player has permission to release other peoples' wolves
@@ -52,12 +54,23 @@ public class EntityListener extends org.bukkit.event.entity.EntityListener {
                             wolf.setOwner(null);
                             wolf.setSitting(false);
                             attacker.sendMessage(ChatColor.RED + "You have released " + owner.getDisplayName() + "'s wolf!");
-                            owner.sendMessage(ChatColor.RED + attacker.getDisplayName() + " has released your wolf!");
+                            if (owner.isOnline())
+                                owner.sendMessage(ChatColor.RED + attacker.getDisplayName() + " has released your wolf!");
+
+                            event.setCancelled(true);
                         }
                     }
                 }
-                
-                event.setCancelled(true);
+
+                // If the wolf's owner is offline or they have permission to have invincible wolves, cancel the event
+                if (wolf.getOwner() instanceof Player) {
+                    Player owner = (Player) wolf.getOwner();
+                    if (!owner.isOnline() || plugin.playerHasPermission(owner, "eternalwolf.invincible_wolves", true)) {
+                        event.setCancelled(true);
+                    }
+                } else {
+                    event.setCancelled(true);
+                }
             }
         }
 
