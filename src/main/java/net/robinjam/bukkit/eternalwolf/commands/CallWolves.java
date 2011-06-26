@@ -28,7 +28,7 @@ public class CallWolves implements CommandExecutor {
         if (!plugin.playerHasPermission(player, "eternalwolf.call_wolves", true))
             return false;
 
-        for (Wolf wolf : plugin.getWolves(player)) {
+        for (Wolf wolf : EternalWolf.getWolves(player)) {
             wolf.setSitting(false);
             wolf.teleport(player);
         }

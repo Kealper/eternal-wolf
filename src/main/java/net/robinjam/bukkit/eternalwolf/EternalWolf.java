@@ -105,7 +105,7 @@ public class EternalWolf extends JavaPlugin {
             if (entity instanceof Wolf) {
                 Wolf wolf = (Wolf) entity;
 
-                if (wolf.isTamed() && player.equals(wolf.getOwner()))
+                if (wolf.isTamed() && player.getName().equals(getWolfOwnerName(wolf)))
                     wolves.add(wolf);
             }
         }
