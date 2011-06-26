@@ -1,7 +1,6 @@
 package net.robinjam.bukkit.eternalwolf.commands;
 
 import net.robinjam.bukkit.eternalwolf.EternalWolf;
-import net.robinjam.bukkit.util.PlayerUtil;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -29,7 +28,7 @@ public class CallWolves implements CommandExecutor {
         if (!plugin.playerHasPermission(player, "eternalwolf.call_wolves", true))
             return false;
 
-        for (Wolf wolf : PlayerUtil.getWolves(player)) {
+        for (Wolf wolf : plugin.getWolves(player)) {
             wolf.setSitting(false);
             wolf.teleport(player);
         }

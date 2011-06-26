@@ -1,7 +1,5 @@
 package net.robinjam.bukkit.eternalwolf;
 
-import net.robinjam.bukkit.util.PlayerUtil;
-import net.robinjam.bukkit.util.WolfUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
@@ -40,7 +38,7 @@ class PlayerListener extends org.bukkit.event.player.PlayerListener {
             } else if (wolf.isTamed()) {
                 if (!player.equals(wolf.getOwner()) && plugin.playerHasPermission(player, "eternalwolf.check_owner", true)) {
                     // If the wolf is owned by another player, get that player's name
-                    player.sendMessage(ChatColor.RED + "That wolf belongs to " + WolfUtil.getWolfOwnerName(wolf));
+                    player.sendMessage(ChatColor.RED + "That wolf belongs to " + plugin.getWolfOwnerName(wolf));
                 }
             }
         }
@@ -54,6 +52,6 @@ class PlayerListener extends org.bukkit.event.player.PlayerListener {
         if (plugin.playerHasPermission(player, "eternalwolf.many_wolves", false))
             return false;
 
-        return (PlayerUtil.getWolves(player).size() >= plugin.maxWolves);
+        return (plugin.getWolves(player).size() >= plugin.maxWolves);
     }
 }

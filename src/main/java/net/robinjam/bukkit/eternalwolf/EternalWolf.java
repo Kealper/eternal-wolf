@@ -3,10 +3,15 @@ package net.robinjam.bukkit.eternalwolf;
 import com.nijiko.permissions.PermissionHandler;
 import com.nijikokun.bukkit.Permissions.Permissions;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import net.robinjam.bukkit.eternalwolf.commands.CallWolves;
+import org.bukkit.craftbukkit.entity.CraftWolf;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Wolf;
 import org.bukkit.event.Event;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
@@ -87,4 +92,25 @@ public class EternalWolf extends JavaPlugin {
         else
             return default_;
     }
+    
+    public static String getWolfOwnerName(Wolf w) {
+        CraftWolf wolf = (CraftWolf) w;
+        return wolf.getHandle().x();
+    }
+    
+    public static List<Wolf> getWolves(Player player) {
+        List<Wolf> wolves = new ArrayList<Wolf>();
+        
+        for (LivingEntity entity : player.getWorld().getLivingEntities()) {
+            if (entity instanceof Wolf) {
+                Wolf wolf = (Wolf) entity;
+
+                if (wolf.isTamed() && player.equals(wolf.getOwner()))
+                    wolves.add(wolf);
+            }
+        }
+
+        return wolves;
+    }
+    
 }

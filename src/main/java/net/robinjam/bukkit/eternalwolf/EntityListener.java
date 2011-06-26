@@ -1,6 +1,5 @@
 package net.robinjam.bukkit.eternalwolf;
 
-import net.robinjam.bukkit.util.WolfUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -52,7 +51,7 @@ public class EntityListener extends org.bukkit.event.entity.EntityListener {
                     else if(damageEvent.getDamager() instanceof Player) {
                         Player attacker = (Player) damageEvent.getDamager();
                         if (plugin.playerHasPermission(attacker, "eternalwolf.release_other_wolves", attacker.isOp()) && attacker.getItemInHand().getType() == Material.BONE) {
-                            attacker.sendMessage(ChatColor.RED + "You have released " + WolfUtil.getWolfOwnerName(wolf) + "'s wolf!");
+                            attacker.sendMessage(ChatColor.RED + "You have released " + plugin.getWolfOwnerName(wolf) + "'s wolf!");
                             if (wolf.getOwner() instanceof Player && ((Player)wolf.getOwner()).isOnline())
                                 ((Player)wolf.getOwner()).sendMessage(ChatColor.RED + attacker.getDisplayName() + " has released your wolf!");
                             
