@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Wolf;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 
 /**
  *
@@ -80,7 +81,7 @@ public class EntityListener extends org.bukkit.event.entity.EntityListener {
         if (event.getEntity() instanceof Player && event instanceof EntityDamageByEntityEvent) {
             EntityDamageByEntityEvent damageEvent = (EntityDamageByEntityEvent) event;
 
-            if (damageEvent.getDamager().equals(damageEvent.getEntity()))
+            if (damageEvent.getDamager() instanceof Player && damageEvent.getDamager().equals(damageEvent.getEntity()))
                 event.setCancelled(true);
         }
     }
