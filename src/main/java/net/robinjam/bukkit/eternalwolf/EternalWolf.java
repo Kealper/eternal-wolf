@@ -95,7 +95,7 @@ public class EternalWolf extends JavaPlugin {
     
     public static String getWolfOwnerName(Wolf w) {
         CraftWolf wolf = (CraftWolf) w;
-        return wolf.getHandle().x();
+        return wolf.getHandle().getOwnerName();
     }
     
     public static List<Wolf> getWolves(Player player) {
