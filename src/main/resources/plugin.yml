@@ -8,6 +8,17 @@ commands:
     usage: /<command>
 
 permissions:
+  eternalwolf.*:
+    description: Gives access to all EternalWolf features
+    default: op
+    children:
+      eternalwolf.invincible_wolves: true
+      eternalwolf.call_wolves: true
+      eternalwolf.release_own_wolves: true
+      eternalwolf.release_other_wolves: true
+      eternalwolf.check_owner: true
+      eternalwolf.many_wolves: true
+    
   eternalwolf.invincible_wolves:
     description: Makes your wolves invincible
     default: true
@@ -22,7 +33,6 @@ permissions:
     
   eternalwolf.release_other_wolves:
     description: Allows you to release other players' wolves
-    default: op
     
   eternalwolf.check_owner:
     description: Allows you to check who owns a wolf
@@ -30,4 +40,3 @@ permissions:
     
   eternalwolf.many_wolves:
     description: Allows you to bypass the max_wolves limit
-    default: false
