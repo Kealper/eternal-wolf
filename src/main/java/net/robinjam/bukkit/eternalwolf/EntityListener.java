@@ -37,7 +37,7 @@ public class EntityListener extends org.bukkit.event.entity.EntityListener {
                         Player owner = (Player) wolf.getOwner();
 
                         // Check if the player has permission to release their own wolves
-                        if (owner.getItemInHand().getType() == Material.BONE && plugin.playerHasPermission(owner, "eternalwolf.release_own_wolves", true)) {
+                        if (owner.getItemInHand().getType() == Material.BONE && owner.hasPermission("eternalwolf.release_own_wolves")) {
                             // Release the wolf
                             wolf.setOwner(null);
                             wolf.setSitting(false);
@@ -50,7 +50,7 @@ public class EntityListener extends org.bukkit.event.entity.EntityListener {
                     // If the player has permission to release other peoples' wolves
                     else if(damageEvent.getDamager() instanceof Player) {
                         Player attacker = (Player) damageEvent.getDamager();
-                        if (plugin.playerHasPermission(attacker, "eternalwolf.release_other_wolves", attacker.isOp()) && attacker.getItemInHand().getType() == Material.BONE) {
+                        if (attacker.hasPermission("eternalwolf.release_other_wolves") && attacker.getItemInHand().getType() == Material.BONE) {
                             attacker.sendMessage(ChatColor.RED + "You have released " + EternalWolf.getWolfOwnerName(wolf) + "'s wolf!");
                             if (wolf.getOwner() instanceof Player && ((Player)wolf.getOwner()).isOnline())
                                 ((Player)wolf.getOwner()).sendMessage(ChatColor.RED + attacker.getDisplayName() + " has released your wolf!");
@@ -65,7 +65,7 @@ public class EntityListener extends org.bukkit.event.entity.EntityListener {
                 // If the wolf's owner is offline or they have permission to have invincible wolves, cancel the event
                 if (wolf.getOwner() instanceof Player) {
                     Player owner = (Player) wolf.getOwner();
-                    if (!owner.isOnline() || plugin.playerHasPermission(owner, "eternalwolf.invincible_wolves", true)) {
+                    if (!owner.isOnline() || owner.hasPermission("eternalwolf.invincible_wolves")) {
                         event.setCancelled(true);
                     }
                 } else {

@@ -1,7 +1,33 @@
 name: EternalWolf
 main: net.robinjam.bukkit.eternalwolf.EternalWolf
 version: ${project.version}
+
 commands:
   call-wolves:
     description: Call all your wolves to your current location
     usage: /<command>
+
+permissions:
+  eternalwolf.invincible_wolves:
+    description: Makes your wolves invincible
+    default: true
+    
+  eternalwolf.call_wolves:
+    description: Allows you to call your wolves using /call-wolves
+    default: true
+    
+  eternalwolf.release_own_wolves:
+    description: Allows you to release your own wolves
+    default: true
+    
+  eternalwolf.release_other_wolves:
+    description: Allows you to release other players' wolves
+    default: op
+    
+  eternalwolf.check_owner:
+    description: Allows you to check who owns a wolf
+    default: true
+    
+  eternalwolf.many_wolves:
+    description: Allows you to bypass the max_wolves limit
+    default: false
