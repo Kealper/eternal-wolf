@@ -1,7 +1,5 @@
 package net.robinjam.bukkit.eternalwolf;
 
-import com.nijiko.permissions.PermissionHandler;
-import com.nijikokun.bukkit.Permissions.Permissions;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +11,6 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Wolf;
 import org.bukkit.event.Event;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -28,7 +25,6 @@ public class EternalWolf extends JavaPlugin {
     private EntityListener entityListener = new EntityListener(this);
     private PlayerListener playerListener = new PlayerListener(this);
     private PluginDescriptionFile pdf;
-    private PermissionHandler permissionHandler;
 
     public static final Logger log = Logger.getLogger("Minecraft");
 
@@ -48,9 +44,6 @@ public class EternalWolf extends JavaPlugin {
 
         // Load config.yml
         loadConfiguration();
-
-        // Set up permissions
-        setupPermissions();
 
         log.log(Level.INFO, String.format("%s version %s is enabled!", pdf.getName(), pdf.getVersion()));
     }
@@ -72,25 +65,6 @@ public class EternalWolf extends JavaPlugin {
         }
 
         maxWolves = config.getInt("max_wolves", maxWolves);
-    }
-
-    private void setupPermissions() {
-        Plugin permissionsPlugin = this.getServer().getPluginManager().getPlugin("Permissions");
-
-        if (permissionHandler == null) {
-            if (permissionsPlugin != null) {
-                permissionHandler = ((Permissions) permissionsPlugin).getHandler();
-            } else {
-                log.info(String.format("[%s] Permissions plugin not detected - using default permissions instead", pdf.getName()));
-            }
-        }
-    }
-    
-    public boolean playerHasPermission(Player player, String nodes, boolean default_) {
-        if (this.permissionHandler != null)
-            return this.permissionHandler.has(player, nodes);
-        else
-            return default_;
     }
     
     public static String getWolfOwnerName(Wolf w) {

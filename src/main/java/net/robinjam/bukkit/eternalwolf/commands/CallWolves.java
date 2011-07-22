@@ -1,6 +1,7 @@
 package net.robinjam.bukkit.eternalwolf.commands;
 
 import net.robinjam.bukkit.eternalwolf.EternalWolf;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -25,8 +26,10 @@ public class CallWolves implements CommandExecutor {
 
         Player player = (Player) sender;
 
-        if (!plugin.playerHasPermission(player, "eternalwolf.call_wolves", true))
+        if (!player.hasPermission("eternalwolf.call_wolves")) {
+            player.sendMessage(ChatColor.RED + "You do not have permission to do that.");
             return false;
+        }
 
         for (Wolf wolf : EternalWolf.getWolves(player)) {
             wolf.setSitting(false);

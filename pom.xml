@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>net.robinjam</groupId>
     <artifactId>eternal-wolf</artifactId>
-    <version>0.4.1</version>
+    <version>0.4.2-SNAPSHOT</version>
     <name>EternalWolf</name>
     <url>http://www.robinjam.net</url>
   
@@ -50,12 +50,6 @@
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
             <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.nijikokun.bukkit</groupId>
-            <artifactId>Permissions</artifactId>
-            <version>3.1.5</version>
         </dependency>
         
         <dependency>
