@@ -6,7 +6,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import net.robinjam.bukkit.eternalwolf.commands.CallWolves;
-import org.bukkit.craftbukkit.entity.CraftWolf;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.AnimalTamer;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Wolf;
@@ -68,8 +69,13 @@ public class EternalWolf extends JavaPlugin {
     }
     
     public static String getWolfOwnerName(Wolf w) {
-        CraftWolf wolf = (CraftWolf) w;
-        return wolf.getHandle().getOwnerName();
+        AnimalTamer owner = w.getOwner();
+        if (owner instanceof Player)
+            return ((Player) owner).getName();
+        else if (owner instanceof OfflinePlayer)
+            return ((OfflinePlayer) owner).getName();
+        else
+            return null;
     }
     
     public static List<Wolf> getWolves(Player player) {
