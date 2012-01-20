@@ -2,6 +2,7 @@ package net.robinjam.bukkit.eternalwolf;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Wolf;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -12,12 +13,6 @@ import org.bukkit.event.entity.EntityDamageEvent;
  * @author robinjam
  */
 public class EntityListener extends org.bukkit.event.entity.EntityListener {
-
-    private EternalWolf plugin;
-
-    public EntityListener(EternalWolf instance) {
-        plugin = instance;
-    }
 
     @Override
     public void onEntityDamage(EntityDamageEvent event) {
@@ -33,15 +28,16 @@ public class EntityListener extends org.bukkit.event.entity.EntityListener {
                     EntityDamageByEntityEvent damageEvent = (EntityDamageByEntityEvent) event;
 
                     // If the wolf was damaged by its owner using a bone
-                    if (damageEvent.getDamager() instanceof Player && ((Player)damageEvent.getDamager()).getName().equals(EternalWolf.getWolfOwnerName(wolf))) {
-                        Player owner = (Player) wolf.getOwner();
+                    if (damageEvent.getDamager() instanceof Player && ((Player)damageEvent.getDamager()).equals(wolf.getOwner())) {
+                        Player player = (Player) damageEvent.getDamager();
+                        OfflinePlayer owner = (OfflinePlayer) wolf.getOwner();
 
                         // Check if the player has permission to release their own wolves
-                        if (owner.getItemInHand().getType() == Material.BONE && owner.hasPermission("eternalwolf.release_own_wolves")) {
+                        if (player.getItemInHand().getType() == Material.BONE && player.hasPermission("eternalwolf.release_own_wolves")) {
                             // Release the wolf
                             wolf.setOwner(null);
                             wolf.setSitting(false);
-                            owner.sendMessage(ChatColor.RED + "You have released your wolf!");
+                            player.sendMessage(ChatColor.RED + "You have released your wolf!");
                         }
 
                         event.setCancelled(true);
@@ -51,7 +47,7 @@ public class EntityListener extends org.bukkit.event.entity.EntityListener {
                     else if(damageEvent.getDamager() instanceof Player) {
                         Player attacker = (Player) damageEvent.getDamager();
                         if (attacker.hasPermission("eternalwolf.release_other_wolves") && attacker.getItemInHand().getType() == Material.BONE) {
-                            attacker.sendMessage(ChatColor.RED + "You have released " + EternalWolf.getWolfOwnerName(wolf) + "'s wolf!");
+                            attacker.sendMessage(ChatColor.RED + "You have released " + ((OfflinePlayer) wolf.getOwner()).getName() + "'s wolf!");
                             if (wolf.getOwner() instanceof Player && ((Player)wolf.getOwner()).isOnline())
                                 ((Player)wolf.getOwner()).sendMessage(ChatColor.RED + attacker.getDisplayName() + " has released your wolf!");
                             

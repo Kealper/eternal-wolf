@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import net.robinjam.bukkit.eternalwolf.commands.CallWolves;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.AnimalTamer;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Wolf;
@@ -23,7 +21,7 @@ import org.bukkit.util.config.Configuration;
  */
 public class EternalWolf extends JavaPlugin {
 
-    private EntityListener entityListener = new EntityListener(this);
+    private EntityListener entityListener = new EntityListener();
     private PlayerListener playerListener = new PlayerListener(this);
     private PluginDescriptionFile pdf;
 
@@ -68,16 +66,6 @@ public class EternalWolf extends JavaPlugin {
         maxWolves = config.getInt("max_wolves", maxWolves);
     }
     
-    public static String getWolfOwnerName(Wolf w) {
-        AnimalTamer owner = w.getOwner();
-        if (owner instanceof Player)
-            return ((Player) owner).getName();
-        else if (owner instanceof OfflinePlayer)
-            return ((OfflinePlayer) owner).getName();
-        else
-            return null;
-    }
-    
     public static List<Wolf> getWolves(Player player) {
         List<Wolf> wolves = new ArrayList<Wolf>();
         
@@ -85,7 +73,7 @@ public class EternalWolf extends JavaPlugin {
             if (entity instanceof Wolf) {
                 Wolf wolf = (Wolf) entity;
 
-                if (wolf.isTamed() && player.getName().equals(getWolfOwnerName(wolf)))
+                if (wolf.isTamed() && player.equals(wolf.getOwner()))
                     wolves.add(wolf);
             }
         }

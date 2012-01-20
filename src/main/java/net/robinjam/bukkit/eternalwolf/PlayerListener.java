@@ -2,6 +2,7 @@ package net.robinjam.bukkit.eternalwolf;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Wolf;
@@ -36,9 +37,9 @@ class PlayerListener extends org.bukkit.event.player.PlayerListener {
                 event.setCancelled(true);
                 player.sendMessage(ChatColor.RED + "You cannot tame more than " + plugin.maxWolves + " wolves!");
             } else if (wolf.isTamed()) {
-                if (!player.getName().equals(EternalWolf.getWolfOwnerName(wolf)) && player.hasPermission("eternalwolf.check_owner")) {
+                if (!player.equals(wolf.getOwner()) && player.hasPermission("eternalwolf.check_owner")) {
                     // If the wolf is owned by another player, get that player's name
-                    player.sendMessage(ChatColor.RED + "That wolf belongs to " + EternalWolf.getWolfOwnerName(wolf));
+                    player.sendMessage(ChatColor.RED + "That wolf belongs to " + (OfflinePlayer) wolf.getOwner());
                 }
             }
         }
