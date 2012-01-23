@@ -35,7 +35,7 @@ class PlayerListener extends org.bukkit.event.player.PlayerListener {
             // do not allow them to tame another one
             if (!wolf.isTamed() && playerHasTooManyWolves(player)) {
                 event.setCancelled(true);
-                player.sendMessage(ChatColor.RED + "You cannot tame more than " + plugin.maxWolves + " wolves!");
+                player.sendMessage(ChatColor.RED + "You cannot tame more than " + plugin.getConfig().getInt("max_wolves") + " wolves!");
             } else if (wolf.isTamed()) {
                 if (!player.equals(wolf.getOwner()) && player.hasPermission("eternalwolf.check_owner")) {
                     // If the wolf is owned by another player, get that player's name
@@ -46,13 +46,15 @@ class PlayerListener extends org.bukkit.event.player.PlayerListener {
     }
 
     protected boolean playerHasTooManyWolves(Player player) {
+        int maxWolves = plugin.getConfig().getInt("max_wolves");
+
         // If max_wolves is -1, allow each player unlimited wolves
-        if (plugin.maxWolves == -1) return false;
+        if (maxWolves == -1) return false;
         
         // Check if the player has permission to own many wolves
         if (player.hasPermission("eternalwolf.many_wolves"))
             return false;
 
-        return (EternalWolf.getWolves(player).size() >= plugin.maxWolves);
+        return (EternalWolf.getWolves(player).size() >= maxWolves);
     }
 }

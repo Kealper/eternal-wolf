@@ -1,6 +1,5 @@
 package net.robinjam.bukkit.eternalwolf;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -13,7 +12,6 @@ import org.bukkit.event.Event;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.util.config.Configuration;
 
 /**
  *
@@ -27,9 +25,11 @@ public class EternalWolf extends JavaPlugin {
 
     public static final Logger log = Logger.getLogger("Minecraft");
 
-    public int maxWolves = 5;
-
     public void onEnable() {
+        // Load config.yml
+        getConfig().options().copyDefaults(true);
+        saveConfig();
+
         // Register events
         PluginManager pm = getServer().getPluginManager();
         pm.registerEvent(Event.Type.ENTITY_DAMAGE, entityListener, Event.Priority.Normal, this);
@@ -41,29 +41,11 @@ public class EternalWolf extends JavaPlugin {
         // Read plugin description file
         pdf = this.getDescription();
 
-        // Load config.yml
-        loadConfiguration();
-
         log.log(Level.INFO, String.format("%s version %s is enabled!", pdf.getName(), pdf.getVersion()));
     }
 
     public void onDisable() {
         // Do nothing
-    }
-
-    protected void loadConfiguration() {
-        File configFile = new File(getDataFolder(), "config.yml");
-        Configuration config = new Configuration(configFile);
-
-        if (!configFile.exists()) {
-            config.setProperty("max_wolves", maxWolves);
-            config.save();
-            log.log(Level.INFO, String.format("[%s] Created default configuration file", pdf.getName()));
-        } else {
-            config.load();
-        }
-
-        maxWolves = config.getInt("max_wolves", maxWolves);
     }
     
     public static List<Wolf> getWolves(Player player) {
