@@ -5,6 +5,9 @@ import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Wolf;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 
@@ -12,9 +15,9 @@ import org.bukkit.event.entity.EntityDamageEvent;
  *
  * @author robinjam
  */
-public class EntityListener extends org.bukkit.event.entity.EntityListener {
+public class EntityListener implements Listener {
 
-    @Override
+    @EventHandler(priority=EventPriority.NORMAL)
     public void onEntityDamage(EntityDamageEvent event) {
         // If the entity that was damaged is a wolf
         if (event.getEntity() instanceof Wolf) {

@@ -6,13 +6,16 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Wolf;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 
 /**
  *
  * @author robinjam
  */
-class PlayerListener extends org.bukkit.event.player.PlayerListener {
+class PlayerListener implements Listener {
 
     private EternalWolf plugin;
 
@@ -20,7 +23,7 @@ class PlayerListener extends org.bukkit.event.player.PlayerListener {
         plugin = instance;
     }
 
-    @Override
+    @EventHandler(priority=EventPriority.NORMAL)
     public void onPlayerInteractEntity(PlayerInteractEntityEvent event) {
         Player player = event.getPlayer();
         Entity target = event.getRightClicked();
