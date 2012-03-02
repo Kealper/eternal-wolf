@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>net.robinjam</groupId>
     <artifactId>eternal-wolf</artifactId>
-    <version>1.0.3-SNAPSHOT</version>
+    <version>1.0.3</version>
     <name>EternalWolf</name>
     <url>http://www.robinjam.net</url>
     
