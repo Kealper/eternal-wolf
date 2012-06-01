@@ -30,7 +30,7 @@ public class EternalWolf extends JavaPlugin {
         pm.registerEvents(playerListener, this);
 
         // Register commands
-        this.getCommand("call-wolves").setExecutor(new CallWolves(this));
+        this.getCommand("call-wolves").setExecutor(new CallWolves());
 
         System.out.println(this + " is enabled!");
     }

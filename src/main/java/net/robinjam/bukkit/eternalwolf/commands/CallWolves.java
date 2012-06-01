@@ -14,12 +14,6 @@ import org.bukkit.entity.Wolf;
  */
 public class CallWolves implements CommandExecutor {
 
-    private EternalWolf plugin;
-
-    public CallWolves(EternalWolf instance) {
-        plugin = instance;
-    }
-
     public boolean onCommand(CommandSender sender, Command command, String label, String[] split) {
         if (!(sender instanceof Player))
             return false;

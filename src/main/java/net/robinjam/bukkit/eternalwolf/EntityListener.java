@@ -33,7 +33,6 @@ public class EntityListener implements Listener {
                     // If the wolf was damaged by its owner using a bone
                     if (damageEvent.getDamager() instanceof Player && ((Player)damageEvent.getDamager()).equals(wolf.getOwner())) {
                         Player player = (Player) damageEvent.getDamager();
-                        OfflinePlayer owner = (OfflinePlayer) wolf.getOwner();
 
                         // Check if the player has permission to release their own wolves
                         if (player.getItemInHand().getType() == Material.BONE && player.hasPermission("eternalwolf.release_own_wolves")) {
