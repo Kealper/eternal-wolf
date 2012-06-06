@@ -1,2 +1,2 @@
-# The number of wolves each player is allowed to tame, or -1 for unlimited.
+# The number of wolves each player is allowed to tame per world, or -1 for unlimited.
 max_wolves: 5
