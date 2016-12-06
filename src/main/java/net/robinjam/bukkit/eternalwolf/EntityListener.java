@@ -80,9 +80,13 @@ public class EntityListener implements Listener {
 				// have invincible wolves, cancel the event
 				if (wolf.getOwner() instanceof OfflinePlayer) {
 					OfflinePlayer owner = (OfflinePlayer) wolf.getOwner();
-					if (!owner.isOnline()
-							|| owner.hasPermission("eternalwolf.invincible_wolves")) {
-						event.setCancelled(true);
+					if (!owner.isOnline()) {
+						Player player = owner.getPlayer();
+						if (player != null) {
+							if (player.hasPermission("eternalwolf.invincible_wolves")) {
+								event.setCancelled(true);
+							}
+						}
 					}
 				} else {
 					event.setCancelled(true);
