@@ -28,6 +28,9 @@ public class CallWolves implements CommandExecutor {
 		}
 
 		for (Wolf wolf : EternalWolf.getWolves(player)) {
+			if (!wolf.getLocation().getChunk().isLoaded()) {
+				wolf.getLocation().getChunk().load();
+			}
 			wolf.setSitting(false);
 			wolf.teleport(player);
 		}
