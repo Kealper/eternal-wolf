@@ -47,7 +47,7 @@ class PlayerListener implements Listener {
 					// name and UUID
 					OfflinePlayer owner = (OfflinePlayer) wolf.getOwner();
 					player.sendMessage(ChatColor.RED + "That wolf belongs to "
-						+ owner.getName() + "(" + owner.getUniqueId() + ")");
+						+ owner.getName() + " (UUID: " + owner.getUniqueId() + ")");
 				}
 			}
 		}
