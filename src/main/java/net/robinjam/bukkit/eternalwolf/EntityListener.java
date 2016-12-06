@@ -17,7 +17,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
  */
 public class EntityListener implements Listener {
 
-	@EventHandler(priority = EventPriority.NORMAL)
+	@EventHandler(priority = EventPriority.LOWEST)
 	public void onEntityDamage(EntityDamageEvent event) {
 		// If the entity that was damaged is a wolf
 		if (event.getEntity() instanceof Wolf) {
@@ -63,7 +63,7 @@ public class EntityListener implements Listener {
 									+ ((OfflinePlayer) wolf.getOwner())
 											.getName() + "'s wolf!");
 							if (wolf.getOwner() instanceof Player
-									&& ((Player) wolf.getOwner()).isOnline())
+									&& ((OfflinePlayer) wolf.getOwner()).isOnline())
 								((Player) wolf.getOwner())
 										.sendMessage(ChatColor.RED
 												+ attacker.getDisplayName()
@@ -78,8 +78,8 @@ public class EntityListener implements Listener {
 
 				// If the wolf's owner is offline or they have permission to
 				// have invincible wolves, cancel the event
-				if (wolf.getOwner() instanceof Player) {
-					Player owner = (Player) wolf.getOwner();
+				if (wolf.getOwner() instanceof OfflinePlayer) {
+					OfflinePlayer owner = (OfflinePlayer) wolf.getOwner();
 					if (!owner.isOnline()
 							|| owner.hasPermission("eternalwolf.invincible_wolves")) {
 						event.setCancelled(true);

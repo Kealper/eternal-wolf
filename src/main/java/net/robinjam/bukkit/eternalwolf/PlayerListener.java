@@ -44,9 +44,10 @@ class PlayerListener implements Listener {
 				if (!player.equals(wolf.getOwner())
 						&& player.hasPermission("eternalwolf.check_owner")) {
 					// If the wolf is owned by another player, get that player's
-					// name
+					// name and UUID
+					OfflinePlayer owner = (OfflinePlayer) wolf.getOwner();
 					player.sendMessage(ChatColor.RED + "That wolf belongs to "
-							+ (OfflinePlayer) wolf.getOwner());
+						+ owner.getName() + "(" + owner.getUniqueId() + ")");
 				}
 			}
 		}

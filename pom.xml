@@ -3,14 +3,14 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>net.robinjam</groupId>
 	<artifactId>eternal-wolf</artifactId>
-	<version>1.0.4-SNAPSHOT</version>
+	<version>1.0.5</version>
 	<name>EternalWolf</name>
 	<url>http://www.robinjam.net</url>
 
 	<repositories>
 		<repository>
 			<id>bukkit-repo</id>
-			<url>http://repo.bukkit.org/content/groups/public</url>
+			<url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
 		</repository>
 	</repositories>
 
@@ -43,7 +43,7 @@
 		<dependency>
 			<groupId>org.bukkit</groupId>
 			<artifactId>bukkit</artifactId>
-			<version>1.2.5-R3.0</version>
+			<version>1.11-R0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 </project>
